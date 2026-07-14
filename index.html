@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interaktywna mapa i przewodnik po budynkach oraz strukturze Wydziału Cybernetyki WAT.">
+    <title>Struktura i Mapa Wydziału Cybernetyki WAT</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231d3f5e'/%3E%3Cpath d='M4 4h24v24H4z' fill='none' stroke='%23b3791a' stroke-width='2'/%3E%3Cpath d='M4 16h24M16 4v24' stroke='%23b3791a' stroke-width='1'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a href="#main" class="skip-link">Przejdź do treści</a>
+
+<header class="site-header">
+    <div class="header-inner" style="max-width:1200px;">
+        <span class="eyebrow">WAT · Wydział Cybernetyki (WCY)</span>
+        <h1>Struktura i Mapa Wydziału</h1>
+        <p>Interaktywny przewodnik po budynkach, instytutach i życiu studenckim</p>
+    </div>
+</header>
+
+<main id="main" class="container" style="max-width:1200px;">
+    <div>
+        <div id="map" role="application" aria-label="Mapa budynków Wydziału Cybernetyki WAT"></div>
+
+        <div class="card" style="margin-top:20px;">
+            <h2>Spis obiektów</h2>
+            <p>Mapa nie jest jedynym sposobem nawigacji — poniższa lista prowadzi do tych samych stron co znaczniki na mapie.</p>
+            <nav class="directory" aria-label="Spis budynków wydziału">
+                <a class="directory-item" href="budynek100.html">
+                    <span class="d-name">Budynek nr 100 — Główny Gmach WCY</span>
+                    <span class="d-coords">52.2532N 20.8997E</span>
+                </a>
+                <a class="directory-item" href="budynek65.html">
+                    <span class="d-name">Budynek nr 65 — ul. Radiowa</span>
+                    <span class="d-coords">52.2554N 20.9038E</span>
+                </a>
+                <a class="directory-item" href="sjo.html">
+                    <span class="d-name">Studium Języków Obcych</span>
+                    <span class="d-coords">52.2553N 20.8955E</span>
+                </a>
+                <a class="directory-item" href="swf.html">
+                    <span class="d-name">Studium Wychowania Fizycznego</span>
+                    <span class="d-coords">52.2511N 20.8936E</span>
+                </a>
+                <a class="directory-item" href="pgi.html">
+                    <span class="d-name">Budynek nr 54 (WIM) — zajęcia PGI</span>
+                    <span class="d-coords">52.2531N 20.9072E</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="card">
+            <h2>Panel Informacyjny WCY</h2>
+
+            <h3>Instytuty Wydziału</h3>
+            <ul>
+                <li><strong>ISI:</strong> Systemów Informatycznych (Bud. 100)</li>
+                <li><strong>ITC:</strong> Teleinformatyki i Cyberbezpieczeństwa (Bud. 65, p. I)</li>
+                <li><strong>IMK:</strong> Matematyki i Kryptologii (Bud. 65, p. II)</li>
+            </ul>
+
+            <h3>Władze i Organizacja</h3>
+            <p>Godziny przyjęć Dziekanatu, struktura kadrowa oraz pełne dane kontaktowe pracowników naukowych znajdują się na oficjalnej stronie WAT.</p>
+
+            <h3>Rozwój i Życie Studenckie</h3>
+            <p>Szczegółowe opisy Wydziałowej Rady Samorządu (WRS) oraz kół naukowych (KZC, CyberSecurity) przenieśliśmy do dedykowanej strefy rozwoju.</p>
+
+            <div class="btn-container">
+                <a href="strefa_studencka.html" class="panel-btn btn-strefa">Otwórz Strefę Studencką →</a>
+                <a href="https://www.wcy.wat.edu.pl/wydzial/struktura-organizacyjna" target="_blank" rel="noopener noreferrer" class="panel-btn btn-wladze">Struktura organizacyjna WCY ↗</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="title-block wide">
+    <div class="tb-grid">
+        <div class="tb-cell"><span class="tb-label">Wydział</span><span class="tb-value">Cybernetyki, WAT</span></div>
+        <div class="tb-cell"><span class="tb-label">Arkusz</span><span class="tb-value">Mapa główna</span></div>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    // 1. Inicjalizacja mapy i wyśrodkowanie na rejon budynków WCY na kampusie WAT
+    var map = L.map('map').setView([52.2538, 20.8992], 17.5);
+
+    // 2. Dodanie darmowego podkładu mapowego OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+
+// MARKER: BUDYNEK NR 100
+var marker100 = L.marker([52.253195825036464, 20.899679611678422]).addTo(map);
+
+marker100.bindTooltip("<strong>Budynek nr 100</strong>", {
+    direction: 'top'
+});
+
+marker100.on('click', function() {
+    window.location.href = 'budynek100.html';
+});
+
+
+// MARKER: BUDYNEK NR 65
+var marker65 = L.marker([52.25536252017762, 20.903847456506565]).addTo(map);
+
+marker65.bindTooltip("<strong>Budynek nr 65</strong>", {
+    direction: 'top'
+});
+
+marker65.on('click', function() {
+    window.location.href = 'budynek65.html';
+});
+
+// MARKER: Studium Wychowania Fizycznego
+var markerSWF = L.marker([52.25114332539471, 20.893645194032256]).addTo(map);
+
+markerSWF.bindTooltip("<strong>Studium Wychowania Fizycznego</strong>", {
+    direction: 'top'
+});
+
+markerSWF.on('click', function() {
+    window.location.href = 'swf.html';
+});
+
+// MARKER: Studium Języków Obcych
+var markerSJO = L.marker([52.255258756942, 20.89550129547782]).addTo(map);
+
+markerSJO.bindTooltip("<strong>Studium Języków Obcych</strong>", {
+    direction: 'top'
+});
+
+markerSJO.on('click', function() {
+    window.location.href = 'sjo.html';
+});
+
+// MARKER: Podstawy Grafiki Inżynieryjnej
+var markerPGI = L.marker([52.25314011741593, 20.907202919206767]).addTo(map);
+
+markerPGI.bindTooltip("<strong>Budynek nr 54 (WIM)</strong>", {
+    direction: 'top'
+});
+
+markerPGI.on('click', function() {
+    window.location.href = 'pgi.html';
+});
+</script>
+
+</body>
+</html>
